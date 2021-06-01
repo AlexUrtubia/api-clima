@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <title>Document</title>
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function() {
+                var ciudad = $('#ciudad').val();
+                var url = 'http://api.openweathermap.org/data/2.5/weather?q='+ciudad+'&APPID=05e5cec6459a42757c300293fbbfb0de';
+                $('#info').empty();
+            $.get(url, function(res) {
+                $('#info').append('<p>'+res.name+': '+res.weather[0].description+'</p>');
+                $('#info').append('<p>Temperatura: '+res.main.temp+'</p>');
+                $('#info').append('<p>Coordenadas: '+res.coord.lat+','+res.coord.lon+'</p>');
+        }, 'json');
+        // don't forget to return false so the page doesn't refresh
+        return false;
+    });
+});
+    </script>
+</head>
+<body>
+    <h1>Aplicación Clima</h1>
+    <form>
+        Ingrese Ciudad <input type="text" id="ciudad">
+        <button type="submit" id="submit">Submit!</button>
+    </form>
+    <div id="info"></div>
+</body>
+</html>
+<!-- Para realizar consultas en consola, ejemplo santiago
+$.get('http://api.openweathermap.org/data/2.5/weather?q=santiago&APPID=05e5cec6459a42757c300293fbbfb0de', function(res) {
+    console.log(res);
+}, 'json'); -->
